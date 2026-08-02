@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Plataforma : MonoBehaviour
 {
     public Transform posicionArriba;
@@ -26,12 +25,10 @@ public class Plataforma : MonoBehaviour
         );
     }
 
-
     public void Bajar()
     {
         objetivo = posicionAbajo.position;
     }
-
 
     public void Subir()
     {
