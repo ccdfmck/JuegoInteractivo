@@ -12,7 +12,7 @@ public class Puerta : MonoBehaviour
         {
             if (GameManager.instancia.tieneLlave)
             {
-                SceneManager.LoadScene("Victoria");
+                SceneManager.LoadScene("Niv2");
             }
             else
             {
