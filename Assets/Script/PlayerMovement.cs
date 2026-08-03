@@ -4,7 +4,11 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
     public float jumpForce = 8f;
-    public bool puedeMover = true;
+
+    // Solo marca esta casilla en el Nivel 2
+    public bool iniciarBloqueado = false;
+
+    private bool puedeMover;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -17,29 +21,31 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Si iniciarBloqueado es true, empieza sin poder moverse.
+        puedeMover = !iniciarBloqueado;
     }
 
     void Update()
     {
-        // para nivel 2 :)
         if (!puedeMover)
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
             animator.SetFloat("Speed", 0);
             return;
         }
+
         // Movimiento horizontal
         float move = Input.GetAxisRaw("Horizontal");
-
         rb.velocity = new Vector2(move * speed, rb.velocity.y);
 
-        // Girar personaje sin cambiar el tamaño
+        // Girar personaje
         if (move > 0)
             spriteRenderer.flipX = false;
         else if (move < 0)
             spriteRenderer.flipX = true;
 
-        // Parámetros del Animator
+        // Animator
         animator.SetFloat("Speed", Mathf.Abs(move));
         animator.SetBool("IsGrounded", isGrounded);
 
@@ -48,6 +54,11 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
+    }
+
+    public void ActivarMovimiento()
+    {
+        puedeMover = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
